@@ -1,17 +1,48 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_sidora_1/pages/HalamanAgenda.dart';
+import 'package:flutter_sidora_1/pages/HalamanDonor.dart';
+import 'package:flutter_sidora_1/pages/HalamanDonor2.dart';
+import 'package:flutter_sidora_1/pages/HalamanStok.dart';
+// ignore: unused_import
 import 'package:flutter_sidora_1/pages/LihatSemua.dart';
 
+
 class SetelahLogin extends StatefulWidget {
-  const SetelahLogin({super.key});
+  const SetelahLogin({Key? key});
 
   @override
-  State<SetelahLogin> createState() => _SetelahLogin();
+  State<SetelahLogin> createState() => _SetelahLoginState();
 }
 
-class _SetelahLogin extends State<SetelahLogin> {
+class _SetelahLoginState extends State<SetelahLogin> {
+  void onKategoriTap(String kategori) {
+    // Menangani perpindahan tempat berdasarkan kategori yang dipilih
+    // Misalnya, Anda dapat menggunakan Navigator untuk berpindah ke halaman kategori yang sesuai
+    if (kategori == "Agenda") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HalamanAgenda()),
+      );
+    } else if (kategori == "Stok") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HalamanStok()),
+      );
+    } else if (kategori == "Donor") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HalamanDonor()),
+      );
+    } else if (kategori == "Donor2") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HalamanDonor2()),
+      );
+    }
+    // Tambahkan logika perpindahan tempat untuk kategori lainnya
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,12 +94,9 @@ class _SetelahLogin extends State<SetelahLogin> {
           ),
           Container(
             margin: EdgeInsets.only(top: 10),
-            // color: Colors.amber,
             child: Column(
               children: [
                 Container(
-                  // height: MediaQuery.of(context).size.height * 0.42,
-                  // color: Colors.green,
                   child: Column(
                     children: [
                       ClipPath(
@@ -111,10 +139,8 @@ class _SetelahLogin extends State<SetelahLogin> {
                 ),
                 Expanded(
                   child: Container(
-                    // color: Colors.purple,
                     child: Column(
                       children: [
-                        //body
                         Expanded(
                           child: ListView(
                             padding: EdgeInsets.symmetric(horizontal: 25),
@@ -135,18 +161,22 @@ class _SetelahLogin extends State<SetelahLogin> {
                                   ItemKategori(
                                     title: "Agenda",
                                     icon: "assets/images/part1.png",
+                                    onTap: () => onKategoriTap("Agenda"),
                                   ),
                                   ItemKategori(
-                                    title: "Stok  ",
+                                    title: "Stok",
                                     icon: "assets/images/part2.png",
+                                    onTap: () => onKategoriTap("Stok"),
                                   ),
                                   ItemKategori(
-                                    title: "Donor ",
+                                    title: "Donor",
                                     icon: "assets/images/part3.png",
+                                    onTap: () => onKategoriTap("Donor"),
                                   ),
                                   ItemKategori(
-                                    title: "Donor ",
+                                    title: "Donor2",
                                     icon: "assets/images/part4.png",
+                                    onTap: () => onKategoriTap("Donor2"),
                                   ),
                                 ],
                               ),
@@ -163,22 +193,24 @@ class _SetelahLogin extends State<SetelahLogin> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => LihatPage()),
-                                    );
-                                  },
-                                  child: Text(
-                                    "Lihat Semua",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LihatPage()),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Lihat Semua",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
                                 ],
                               ),
                               SizedBox(height: 20),
@@ -198,7 +230,6 @@ class _SetelahLogin extends State<SetelahLogin> {
                             ],
                           ),
                         ),
-                        //Navigation
                         Container(
                           height: 75,
                           decoration: BoxDecoration(
@@ -284,31 +315,36 @@ class ItemKategori extends StatelessWidget {
     Key? key,
     required this.title,
     required this.icon,
+    required this.onTap,
   }) : super(key: key);
+
   final String title;
   final String icon;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          // color: Colors.redAccent,
-          child: Image.asset(
-            icon,
-            fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            child: Image.asset(
+              icon,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        SizedBox(height: 5),
-        Text(
-          title,
-          style: TextStyle(fontSize: 15),
-        ),
-      ],
+          SizedBox(height: 5),
+          Text(
+            title,
+            style: TextStyle(fontSize: 15),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -338,13 +374,13 @@ class ItemNav extends StatelessWidget {
             fit: BoxFit.contain,
           ),
         ),
-        SizedBox(height: 5), //menambahkan SizedBox
+        SizedBox(height: 5),
         Text(
           title,
           style: TextStyle(
             color: (status == true) ? Colors.red[900] : Colors.grey[600],
           ),
-        ), //menambahkan Text
+        ),
       ],
     );
   }

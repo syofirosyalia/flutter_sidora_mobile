@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sidora_1/pages/SetelahLogin.dart';
 import 'package:flutter_sidora_1/pages/Registrasi.dart';
-import 'package:flutter_sidora_1/pages/Started.dart';
+// import 'package:flutter_sidora_1/pages/Started.dart';
 // import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
